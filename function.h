@@ -9,24 +9,26 @@
 #define _FUNCTION_H
 #include<stdio.h>
 #include<curses.h>
+#include <unistd.h>
+#include <time.h>
 #include<stdlib.h>
 
-#define SNACK_BODY "s "
+#define snake_BODY "s "
 extern int mainscr_col;
 extern int mainscr_line;
-struct snack
+struct snake
 {
 	int x_pos, y_pos;
 	char* body;
-	struct snack *pre;
-}Snack;
+	struct snake *pre;
+}snake;
 
 extern WINDOW* mainscr;;
 
-struct snack* creat(struct snack *pLast, int snack_long);
-struct snack* add(struct snack *pHead, int y_pos, int x_pos);
-void walk(struct snack *pLast, int direction);
-int check(struct snack *pLast, struct snack *pHead, int y_pos, int x_pos, int direction);
+struct snake* creat(struct snake *pLast, int snake_long);
+struct snake* add(struct snake *pHead, int y_pos, int x_pos);
+void walk(struct snake *pLast, int direction);
+int check(struct snake *pLast, struct snake *pHead, int y_pos, int x_pos, int direction);
 int random_x(int *px1, int *px2);
 int random_y(int *py1, int *py2);
 void addfood(int py, int px);

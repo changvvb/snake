@@ -1,24 +1,25 @@
 #include "function.h"
 
+int main();
 
 int mainscr_col = 100;
 int mainscr_line = 35;
 
 WINDOW *mainscr = NULL;
 
-struct snack* creat(struct snack *pLast, int snack_long)
+struct snake* creat(struct snake *pLast, int snake_long)
 {
 	int i;
-	struct snack *p;
+	struct snake *p;
 	p = pLast;
 	p->x_pos = (int)((COLS-mainscr_col)/4)*2+1;
 	p->y_pos = (LINES-mainscr_line)/2+3;
 	p->body = "  ";
-	for(i = 1; i <= snack_long; i += 2)
+	for(i = 1; i <= snake_long; i += 2)
 	{
-		p->pre = (struct snack*)malloc(sizeof(struct snack));
+		p->pre = (struct snake*)malloc(sizeof(struct snake));
 		p = p->pre;
-		p->body = SNACK_BODY;
+		p->body = snake_BODY;
 		p->x_pos = (COLS-mainscr_col)/4*2+i;
 		p->y_pos = (LINES-mainscr_line)/2+3;
 	}
@@ -26,18 +27,18 @@ struct snack* creat(struct snack *pLast, int snack_long)
 	return p;
 }
 
-struct snack* add(struct snack *pHead, int y_pos, int x_pos)
+struct snake* add(struct snake *pHead, int y_pos, int x_pos)
 {
-	pHead->pre = (struct snack*)malloc(sizeof(struct snack));
+	pHead->pre = (struct snake*)malloc(sizeof(struct snake));
 	pHead = pHead->pre;
 	pHead->pre = NULL;
 	pHead->y_pos = y_pos;
 	pHead->x_pos = x_pos;
-	pHead->body = SNACK_BODY;
+	pHead->body = snake_BODY;
 	return pHead;
 }
 
-void walk(struct snack *pLast, int direction)
+void walk(struct snake *pLast, int direction)
 {
 	init_pair(1,COLOR_BLUE,COLOR_BLUE);
 	attron(COLOR_PAIR(1));
@@ -45,7 +46,7 @@ void walk(struct snack *pLast, int direction)
 	{
 		erase();
 		box(mainscr,'|','o');
-		struct snack* p = pLast;
+		struct snake* p = pLast;
 		while(p->pre != NULL)
 		{
 			p->x_pos = p->pre->x_pos;
@@ -76,7 +77,7 @@ void walk(struct snack *pLast, int direction)
 	}
 }
 
-int check(struct snack *pLast, struct snack *pHead, int y_pos, int x_pos, int direction)
+int check(struct snake *pLast, struct snake *pHead, int y_pos, int x_pos, int direction)
 {
 	switch(direction)
 	{
@@ -92,7 +93,7 @@ int check(struct snack *pLast, struct snack *pHead, int y_pos, int x_pos, int di
 			break;
 	}
 	
-	struct snack *p;
+	struct snake *p;
 	int exam;
 	for(p = pLast; p->pre != NULL; p = p->pre)
 	{
@@ -165,7 +166,7 @@ void choose(int* dif,int* v)
 	noecho();
 	start_color();refresh();
 	int a,i;
-	char* str0 = "GREEDY SNACK V1.0";
+	char* str0 = "GREEDY snake V1.0";
 	move(5,COLS/2-25);
 	for(;*str0!='\0';str0++)
 	{
@@ -226,7 +227,7 @@ void gameover(int dif, int* score, int hscore, int boolhscore)
 	if (boolhscore)
 	{
 		FILE *fp;
-		fp = fopen("./snack_score","w");
+		fp = fopen("./snake","w");
 		fprintf(fp,"%d",hscore);
 		fclose(fp);
 		move(LINES/2-2,COLS/2 - 7);
@@ -255,7 +256,7 @@ int highest(int* hscore)
 {
 	FILE *fp;
 	char p[10];
-	fp = fopen("./snack_score","a+");
+	fp = fopen("./snake","a+");
 	fscanf(fp,"%s",p);
 	*hscore = atoi(p);
 	fclose(fp);

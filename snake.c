@@ -18,9 +18,9 @@ int main()
 	*py2 = 14 + (LINES-mainscr_line)/2;
 	random_x(px1,px2);
 	random_y(py1,py2);
-	struct snack* pHead;
-	struct snack* pLast;
-	pLast = &Snack;
+	struct snake* pHead;
+	struct snake* pLast;
+	pLast = &snake;
 	pHead = creat(pLast,4);
 	int key, checkNum, direction = 'd';
 	
