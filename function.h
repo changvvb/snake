@@ -34,8 +34,8 @@ int random_y(int *py1, int *py2);
 void addfood(int py, int px);
 void addScore(int dif, int score, int* hscore, int* boolhscore);
 void choose(int* dif,int* v);
-void gameover(int dif, int* score, int hscore, int boolhscore);
-int highest(int* hscore);
+int gameover(int dif, int* score, int hscore, int boolhscore);
+void highest(int* hscore);
 void initial(void);
 
 #endif

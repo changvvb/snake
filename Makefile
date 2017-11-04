@@ -1,4 +1,4 @@
-CFLAGS := -lcurses
+CFLAGS := -lcurses -g
 
 snack : snake.o function.o
 	gcc -o snake snake.o function.o $(CFLAGS)

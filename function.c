@@ -1,12 +1,17 @@
 #include "function.h"
-
-int main();
-
+#include <string.h>
 int mainscr_col = 100;
 int mainscr_line = 35;
-#define RECORD_FILE "~/.snack"
 
 WINDOW *mainscr = NULL;
+
+char *get_recoderfile()
+{
+    static char record_file[128];
+    snprintf(record_file, 128, "%s/.snake", getenv("HOME"));
+    return record_file;
+}
+
 
 struct snake* creat(struct snake *pLast, int snake_long)
 {
@@ -219,7 +224,7 @@ void choose(int* dif,int* v)
 	usleep(500000);
 }
 
-void gameover(int dif, int* score, int hscore, int boolhscore)
+int gameover(int dif, int* score, int hscore, int boolhscore)
 {
 	//usleep(1500000);
 	//timeout(-1); getch();
@@ -228,7 +233,8 @@ void gameover(int dif, int* score, int hscore, int boolhscore)
 	if (boolhscore)
 	{
 		FILE *fp;
-		fp = fopen(RECORD_FILE,"w");
+		fp = fopen(get_recoderfile(),"w");
+        if (fp == NULL) return -1;
 		fprintf(fp,"%d",hscore);
 		fclose(fp);
 		move(LINES/2-2,COLS/2 - 7);
@@ -249,15 +255,17 @@ void gameover(int dif, int* score, int hscore, int boolhscore)
 	if(a == 'c')
 	{
 		*score = 0;
-		main();
+        return 0;
 	}
+    return -1;
 }
 
-int highest(int* hscore)
+void highest(int* hscore)
 {
 	FILE *fp;
 	char p[10];
-	fp = fopen(RECORD_FILE,"a+");
+	fp = fopen(get_recoderfile(),"a+");
+    if (fp == NULL) return ;
 	fscanf(fp,"%s",p);
 	*hscore = atoi(p);
 	fclose(fp);

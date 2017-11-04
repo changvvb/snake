@@ -2,33 +2,35 @@
 #include<curses.h>
 #include<stdlib.h>
 #include "function.h"
+
 int score,v,dif,hscore,boolhscore = 0;
+int px1, px2, py1, py2;
+struct snake* pHead;
+struct snake* pLast;
+int key, checkNum, direction = 'd';
+
+void init() 
+{
+    choose(&dif,&v);
+    initial();
+    highest(&hscore);
+	px2 = 21 + (COLS-mainscr_col)/4*2;
+	py2 = 14 + (LINES-mainscr_line)/2;
+	random_x(&px1,&px2);
+	random_y(&py1,&py2);
+	pLast = &snake;
+	pHead = creat(pLast,4);
+}
 
 int main()
 {
-	choose(&dif,&v);
-	initial();
-	highest(&hscore);
-	int *px1, *px2, *py1, *py2;
-	px1 = (int*)malloc(sizeof(int));
-	px2 = (int*)malloc(sizeof(int));
-	py1 = (int*)malloc(sizeof(int));
-	py2 = (int*)malloc(sizeof(int));
-	*px2 = 21 + (COLS-mainscr_col)/4*2;
-	*py2 = 14 + (LINES-mainscr_line)/2;
-	random_x(px1,px2);
-	random_y(py1,py2);
-	struct snake* pHead;
-	struct snake* pLast;
-	pLast = &snake;
-	pHead = creat(pLast,4);
-	int key, checkNum, direction = 'd';
-	
+
+    init();
 	while(direction != 113)
 	{	
 		if(checkNum != 1)
 			walk(pLast, direction);
-		addfood(*py1,*px1);
+		addfood(py1,px1);
 		addScore(dif,score,&hscore,&boolhscore);
 		refresh();
 		usleep(v);
@@ -79,20 +81,24 @@ int main()
 			default:
 				break;
 		}
-		checkNum = check(pLast,pHead,*py1,*px1,direction);
+		checkNum = check(pLast,pHead,py1,px1,direction);
 		if(checkNum == 1)
 		{
 			score ++;
-			pHead = add(pHead,*py1,*px1);
-			random_x(px1,px2);
-			random_y(py1,py2);
+			pHead = add(pHead,py1,px1);
+			random_x(&px1,&px2);
+			random_y(&py1,&py2);
 		}
 		else if(checkNum == 0 || checkNum == 2)
 		{
-			break;
+            if(0==gameover(dif,&score,hscore,boolhscore)) {
+                init();
+                continue;
+            }
+            else 
+    			break;
 		}
 	}
-	gameover(dif,&score,hscore,boolhscore);
 	endwin();
 	return 0;
 }
