@@ -1,4 +1,4 @@
-## SNAKE V1.0
+## SNAKE V1.1
 ### compile 
 ```bash
 $ make
