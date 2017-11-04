@@ -4,6 +4,7 @@ int main();
 
 int mainscr_col = 100;
 int mainscr_line = 35;
+#define RECORD_FILE "~/.snack"
 
 WINDOW *mainscr = NULL;
 
@@ -227,7 +228,7 @@ void gameover(int dif, int* score, int hscore, int boolhscore)
 	if (boolhscore)
 	{
 		FILE *fp;
-		fp = fopen("./snake","w");
+		fp = fopen(RECORD_FILE,"w");
 		fprintf(fp,"%d",hscore);
 		fclose(fp);
 		move(LINES/2-2,COLS/2 - 7);
@@ -256,7 +257,7 @@ int highest(int* hscore)
 {
 	FILE *fp;
 	char p[10];
-	fp = fopen("./snake","a+");
+	fp = fopen(RECORD_FILE,"a+");
 	fscanf(fp,"%s",p);
 	*hscore = atoi(p);
 	fclose(fp);
