@@ -172,7 +172,7 @@ void choose(int* dif,int* v)
 	noecho();
 	start_color();refresh();
 	int a,i;
-	char* str0 = "GREEDY snake V1.0";
+	char* str0 = "GREEDY snake V1.1";
 	move(5,COLS/2-25);
 	for(;*str0!='\0';str0++)
 	{
