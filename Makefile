@@ -13,4 +13,4 @@ clean :
 	rm function.o snake.o snake
 
 install:
-	mv snake /usr/bin
+	cp snake /usr/bin
