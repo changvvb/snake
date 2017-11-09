@@ -120,6 +120,7 @@ int check(struct snake *pLast, struct snake *pHead, int y_pos, int x_pos, int di
 		return 2;
 }
 
+//Create random position X
 int random_x(int *px1, int *px2)
 {
 	*px1 = *px2;
@@ -127,6 +128,7 @@ int random_x(int *px1, int *px2)
 	return *px1;
 }
 
+//Create random position X
 int random_y(int *py1, int *py2)
 {
 	*py1 = *py2;
@@ -134,6 +136,7 @@ int random_y(int *py1, int *py2)
 	return *py1;
 }
 
+//Add a block 
 void addfood(int py, int px)
 {
 	init_pair(2,COLOR_RED,COLOR_RED);
@@ -143,6 +146,7 @@ void addfood(int py, int px)
 	attroff(COLOR_PAIR(2));
 }
 
+//Add score
 void addScore(int dif, int score, int* hscore, int* boolhscore)
 {
 	int score0 = dif*score;
@@ -167,38 +171,43 @@ void addScore(int dif, int score, int* hscore, int* boolhscore)
 
 void choose(int* dif,int* v)
 {
+	int a;
+    static int isFirst = 1;
 	initscr();
 	erase();
 	noecho();
 	start_color();refresh();
-	int a,i;
-	char* str0 = "GREEDY snake V1.1";
-	move(5,COLS/2-25);
-	for(;*str0!='\0';str0++)
-	{
-		addch(*str0);usleep(100000);refresh();
-	}
-	usleep(2000000);
-	char* str1 = "Please make this window biggest!!!!!";
-	move(7,COLS/2-25);
-	for(;*str1!='\0';str1++)
-	{
-		addch(*str1);usleep(100000);refresh();
-	}
-	char* str2 = "Use <UP><DOWN><LEFT><RIGHT> or <w><s><a><d> to control the game.";
-	move(9,COLS/2-25);
-	for(;*str2!='\0';str2++)
-	{
-		addch(*str2);usleep(50000);refresh();
-	}
-	char* str3 = "Enter <1> <2> <3> to choose difficulity.";
-	move(11,COLS/2-25);
-	for(;*str3!='\0';str3++)
-	{
-		addch(*str3);usleep(50000);refresh();
-	}
-	move(13,COLS/2-25);
-	addstr("1.Easy");
+    move(5,COLS/2-25);
+    if(isFirst) {
+        isFirst = 0;
+        char* str0 = "GREEDY snake V1.1";
+        for(;*str0!='\0';str0++)
+        {
+            addch(*str0);usleep(100000);refresh();
+        }
+        usleep(2000000);
+        char* str1 = "Please make this window biggest!!!!!";
+        move(7,COLS/2-25);
+        for(;*str1!='\0';str1++)
+        {
+            addch(*str1);usleep(100000);refresh();
+        }
+        char* str2 = "Use <UP><DOWN><LEFT><RIGHT> or <w><s><a><d> to control the game.";
+        move(9,COLS/2-25);
+        for(;*str2!='\0';str2++)
+        {
+            addch(*str2);usleep(50000);refresh();
+        }
+        char* str3 = "Enter <1> <2> <3> to choose difficulity.";
+        move(11,COLS/2-25);
+        for(;*str3!='\0';str3++)
+        {
+            addch(*str3);usleep(50000);refresh();
+        }
+
+    }
+    move(13,COLS/2-25);
+    addstr("1.Easy");
 	move(14,COLS/2-25);
 	addstr("2.Middle");
 	move(15,COLS/2-25);
