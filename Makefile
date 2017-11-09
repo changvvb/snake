@@ -14,3 +14,7 @@ clean :
 
 install:
 	cp snake /usr/bin
+
+uninstall:
+	rm /usr/bin/snake
+
