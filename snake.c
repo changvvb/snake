@@ -20,6 +20,7 @@ void init()
 	random_y(&py1,&py2);
 	pLast = &snake;
 	pHead = creat(pLast,4);
+    direction = 'd';
 }
 
 int main()
